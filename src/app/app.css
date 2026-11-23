@@ -1,0 +1,28 @@
+:host {
+  display: block;
+}
+
+.home-content {
+  width: min(1100px, calc(100% - 32px));
+  margin: 32px auto;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+app-notification-list {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 700px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  app-notification-list {
+    grid-column: auto;
+  }
+}
