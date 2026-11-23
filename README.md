@@ -1,59 +1,67 @@
-# ConferenceApp
+# Conference App — Prosit 1
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.31.
+Application **Angular 21** de gestion des conférences : page d’accueil composée de sections indépendantes et liste interactive de conférences à venir.
 
-## Development server
+## Lancer le projet
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Prérequis : Node.js 22 et npm 12.2.3.
 
 ```bash
-ng generate component component-name
+npm install
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Ouvrir `http://localhost:4200`.
 
 ```bash
-ng generate --help
+npm test -- --watch=false  # tests unitaires
+npm run build              # build de production dans dist/conference-app
 ```
 
-## Building
+## Organisation en composants
 
-To build the project run:
+`App` assemble sept composants standalone, chacun responsable de son template et de ses styles :
 
-```bash
-ng build
-```
+- `Header` : identité de l’application ;
+- `NavBar` : navigation entre les sections ;
+- `ProfileUser` : informations utilisateur ;
+- `FriendsList` : liste des amis ;
+- `NotificationList` : notifications ;
+- `ConferenceList` : données et interactions des conférences ;
+- `Footer` : pied de page.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Ce découpage permet de modifier, tester ou réutiliser une section sans toucher aux autres. Il évite un template racine volumineux et facilite le travail simultané de plusieurs développeurs.
 
-## Running unit tests
+## Mécanismes Angular utilisés
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+| Mécanisme | Exemple dans le projet | Intérêt |
+|---|---|---|
+| Interpolation | `{{ conference.title }}` | Afficher une valeur TypeScript dans le HTML. |
+| Property binding | `[disabled]="remainingPlaces(conference) === 0"` | Faire dépendre une propriété HTML de l’état du composant. |
+| Event binding | `(click)="register(conference)"` | Réagir à une action utilisateur. |
+| Two-way binding | `[(ngModel)]="searchTerm"` | Synchroniser le champ de recherche et la propriété `searchTerm`. |
+| Contrôle de flux `@if` | États vide et recherche sans résultat | Afficher le contenu adapté à une condition. |
+| Contrôle de flux `@for` | Parcours de `filteredConferences` | Générer une carte par conférence, avec `track conference.id`. |
+| Directive `NgClass` | `[ngClass]="registrationClass(conference)"` | Appliquer la classe CSS correspondant à la disponibilité. |
+| Pipe `uppercase` | `conference.title \| uppercase` | Afficher le titre en majuscules sans modifier la donnée. |
+| Pipe `date` | `conference.date \| date:'dd MMMM yyyy'` | Formater la date en français sans modifier sa valeur. |
 
-```bash
-ng test
-```
+## Comportement de la liste
 
-## Running end-to-end tests
+L’interface `Conference` définit `id`, `title`, `description`, `date`, `place`, `maxParticipants` et `nbParticipants`. Les données de démonstration sont déclarées dans `ConferenceList`.
 
-For end-to-end (e2e) testing, run:
+- Seules les conférences du jour ou à venir sont affichées.
+- La recherche accepte une partie du titre, ignore la casse et supprime les espaces périphériques.
+- Une liste sans données et une recherche sans résultat affichent deux messages distincts.
+- Chaque clic sur **S’inscrire** ajoute un participant.
+- Le bouton est désactivé à capacité maximale et la méthode `register` empêche également tout dépassement.
 
-```bash
-ng e2e
-```
+| Places restantes | Classe | Couleur |
+|---|---|---|
+| 10 ou plus | `available` | Vert |
+| De 1 à 9 | `limited` | Orange |
+| 0 | `full` | Rouge, inscription désactivée |
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Vérifications
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Les tests couvrent la composition de la page, les dates passées et du jour, la recherche, les seuils de couleur, le clic d’inscription, la capacité maximale, les pipes et les messages d’état vide.

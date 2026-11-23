@@ -18,6 +18,7 @@ describe('App', () => {
       'app-profile-user',
       'app-friends-list',
       'app-notification-list',
+      'app-conference-list',
       'app-footer',
     ];
 
