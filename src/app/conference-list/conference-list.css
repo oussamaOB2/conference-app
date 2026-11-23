@@ -1,0 +1,202 @@
+.conference-section {
+  margin-top: 38px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.section-heading h2 {
+  margin: 2px 0 6px;
+  color: #173b67;
+  font-size: 28px;
+}
+
+.section-heading p {
+  margin: 0;
+}
+
+.eyebrow,
+.conference-number {
+  color: #2f6fb4;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 1.7px;
+}
+
+.conference-count {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border-radius: 20px;
+  background: #eaf2fb;
+  color: #173b67;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.search-field {
+  display: grid;
+  gap: 7px;
+  margin-bottom: 24px;
+  color: #173b67;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.search-field input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid #d4dfeb;
+  border-radius: 10px;
+  outline: none;
+  background: white;
+  color: #26374a;
+  box-shadow: 0 2px 8px rgba(23, 59, 103, 0.04);
+}
+
+.search-field input:focus {
+  border-color: #2f6fb4;
+  box-shadow: 0 0 0 3px rgba(47, 111, 180, 0.14);
+}
+
+.conference-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.conference-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid #e3eaf2;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.07);
+}
+
+.card-content {
+  flex: 1;
+  padding: 22px;
+}
+
+.conference-card h3 {
+  margin: 8px 0 12px;
+  color: #173b67;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.description {
+  min-height: 66px;
+  margin: 0 0 20px;
+  color: #5b6877;
+  font-size: 14px;
+}
+
+.details {
+  display: grid;
+  gap: 10px;
+}
+
+.details p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.details strong {
+  color: #173b67;
+}
+
+.details span {
+  text-align: right;
+}
+
+.card-footer {
+  padding: 16px 22px 20px;
+  border-top: 1px solid #edf1f5;
+  background: #fbfcfe;
+}
+
+.participants {
+  display: grid;
+  margin-bottom: 13px;
+  font-size: 13px;
+}
+
+.participants strong {
+  color: #173b67;
+}
+
+.participants span {
+  color: #6a7685;
+  font-size: 12px;
+}
+
+.registration-button {
+  width: 100%;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.registration-button.available {
+  background: #26a269;
+}
+
+.registration-button.limited {
+  background: #ed8b16;
+}
+
+.registration-button.full {
+  background: #c93b3b;
+}
+
+.registration-button:not(:disabled):hover {
+  filter: brightness(0.92);
+}
+
+.registration-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.empty-state {
+  padding: 28px;
+  border: 1px dashed #a8bad0;
+  border-radius: 12px;
+  background: white;
+  color: #52647a;
+  text-align: center;
+}
+
+@media (max-width: 950px) {
+  .conference-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .conference-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .description {
+    min-height: auto;
+  }
+}

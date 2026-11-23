@@ -1,0 +1,62 @@
+<section class="conference-section" id="conference-list">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">AGENDA</p>
+      <h2>Liste des conférences à venir</h2>
+      <p>Découvrez nos prochains événements et réservez votre place.</p>
+    </div>
+    <span class="conference-count">{{ filteredConferences.length }} conférence(s)</span>
+  </div>
+
+  <label class="search-field">
+    <span>Rechercher une conférence</span>
+    <input
+      type="search"
+      [(ngModel)]="searchTerm"
+      name="conferenceSearch"
+      placeholder="Tapez une partie ou la totalité du titre…"
+    />
+  </label>
+
+  @if (conferences.length === 0) {
+    <p class="empty-state" aria-live="polite">Aucune conférence enregistrée.</p>
+  } @else if (filteredConferences.length === 0) {
+    <p class="empty-state" aria-live="polite">Aucune conférence ne correspond à votre recherche.</p>
+  } @else {
+    <div class="conference-grid" id="conference">
+      @for (conference of filteredConferences; track conference.id) {
+        <article class="conference-card">
+          <div class="card-content">
+            <p class="conference-number">CONFÉRENCE #{{ conference.id }}</p>
+            <h3>{{ conference.title | uppercase }}</h3>
+            <p class="description">{{ conference.description }}</p>
+            <div class="details">
+              <p><strong>Date</strong><span>{{ conference.date | date: 'dd MMMM yyyy' }}</span></p>
+              <p><strong>Lieu</strong><span>{{ conference.place }}</span></p>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            <div class="participants">
+              <strong>{{ conference.nbParticipants }} / {{ conference.maxParticipants }}</strong>
+              <span>participants · {{ remainingPlaces(conference) }} place(s) restante(s)</span>
+            </div>
+            <button
+              type="button"
+              class="registration-button"
+              [ngClass]="registrationClass(conference)"
+              [disabled]="remainingPlaces(conference) === 0"
+              (click)="register(conference)"
+            >
+              @if (remainingPlaces(conference) === 0) {
+                Complet
+              } @else {
+                S’inscrire
+              }
+            </button>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
